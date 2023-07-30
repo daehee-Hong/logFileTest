@@ -1,5 +1,6 @@
 package main.common;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +19,7 @@ public class LogUtil {
             StringBuilder sb = new StringBuilder();
             sb.append(LOG_PATH).append(LOG_FILE_NAME).append(".log");
 
-            pw = new PrintWriter(new FileWriter(sb.toString(), true), true);
+            pw = new PrintWriter(new FileWriter(sb.toString(), true), false);
             sb.delete(0, sb.length());
             sb.append("[").append(getCurrentTime()).append("] : ").append(msg);
             pw.println(sb);
@@ -28,6 +29,24 @@ public class LogUtil {
             e.printStackTrace();
         }finally {
             if (pw != null) pw.close();
+        }
+    }
+    public static void writeLogFileBuffer(String msg){
+        BufferedWriter bw = null;
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append(LOG_PATH).append(LOG_FILE_NAME).append(".log");
+
+            bw = new BufferedWriter(new FileWriter(sb.toString(), true));
+            sb.delete(0, sb.length());
+            sb.append("[").append(getCurrentTime()).append("] : ").append(msg).append("\n");
+            bw.append(sb.toString());
+            bw.flush();
+        }catch (IOException e){
+            System.err.println("[ERROR] 로그 작성중 에러 : " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            if (bw != null) try {bw.close();}catch (IOException e){}
         }
     }
     // 파일 이름 설정

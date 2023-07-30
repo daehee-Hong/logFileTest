@@ -8,5 +8,6 @@ public class testLog {
         LogUtil.setLogFileName("testLog-" + LogUtil.getCurrentTime("yyyy-MM-dd"));
         LogUtil.setLogPath("src/main/resources/logFile/");
         LogUtil.writeLogFile("msg");
+        LogUtil.writeLogFileBuffer("msgBuffer");
     }
 }
